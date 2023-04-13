@@ -561,4 +561,43 @@ public class Presenter {
             } 
         } while (flag);
     }
+
+    private void thirdDecision() throws IOException {
+        boolean flag = true;
+        do {
+            try {
+                String input = menus.showThirdMenu();
+                int decision = Integer.parseInt(input);
+                flag = false;
+                switch (decision) {
+                    case 1:
+                        secondDecision();
+                        break;
+                    case 2:
+                        menus.printBorderedMessage(Constants.GOOD_BYE_MESSAGE);
+                        customSystem.createMovementsFiles(Constants.OBJECT_INFO_PATH);
+                        System.exit(0);
+                        break;
+                    default:
+                        menus.printBorderedMessage(Constants.INVALID_OPTION_MESSAGE);
+                        thirdDecision();
+                }
+            } catch (NumberFormatException e) {
+                menus.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            } 
+        } while (flag);
+    }
+    
+    private void run() throws IOException {
+        menus.printBorderedTitleMessage();
+        if(this.validateAgentLogin()) {
+            firstDecision();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        Presenter presenter = new Presenter();
+        presenter.run();
+    }
 }
