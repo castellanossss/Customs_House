@@ -235,5 +235,121 @@ public class Presenter {
         movementView.printBorderedMessage(Constants.MOVEMENT_REGISTERED_SUCCESSFULLY);
         return movement;
     }
+    private int validateMovementId() {
+        boolean flag = true;
+        int id = 0;
+        do {
+            try {
+                String input = movementView.requestInfo(Constants.ASK_FOR_MOVEMENT_ID);
+                id = Integer.parseInt(input);
+                flag = false;
+            } catch (NumberFormatException e) {
+                itemView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+
+        return id;
+    }
+
+    private boolean validateDays(int day) {
+        boolean isOutOfRange = false;
+        if (!(day > 0 && day <= 31)) {
+            movementView.printBorderedMessage(Constants.MOVEMENT_DAY_OUT_OF_RANGE);
+            isOutOfRange = true;
+        }
+        return isOutOfRange;
+    }
+
+    private int validateMovementDay() {
+        boolean flag = true;
+        int day = 0;
+        do {
+            try {
+                String input = movementView.requestInfo(Constants.ASK_FOR_MOVEMENT_DATE_DAY);
+                day = Integer.parseInt(input);
+                flag = false;
+                while (validateDays(day)) {
+                    input = movementView.requestInfo(Constants.ASK_FOR_MOVEMENT_DATE_DAY);
+                    day = Integer.parseInt(input);
+                }
+            } catch (NumberFormatException e) {
+                movementView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+
+        return day;
+    }
+
+    private boolean validateMonths(int month) {
+        boolean isOutOfRange = false;
+        if (!(month > 0 && month <= 12)) {
+            movementView.printBorderedMessage(Constants.MOVEMENT_MONTH_OUT_OF_RANGE);
+            isOutOfRange = true;
+        }
+        return isOutOfRange;
+    }
+
+    private int validateMovementMonth() {
+        boolean flag = true;
+        int month = 0;
+        do {
+            try {
+                String input = movementView.requestInfo(Constants.ASK_FOR_MOVEMENT_DATE_MONTH);
+                month = Integer.parseInt(input);
+                flag = false;
+                while (validateMonths(month)) {
+                    input = movementView.requestInfo(Constants.ASK_FOR_MOVEMENT_DATE_MONTH);
+                    month = Integer.parseInt(input);
+                }
+            } catch (NumberFormatException e) {
+                movementView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+
+        return month;
+    }
+
+    private boolean validateYears(int year) {
+        boolean isOutOfRange = false;
+        if (!(year > 1900)) {
+            movementView.printBorderedMessage(Constants.MOVEMENT_YEAR_OUT_OF_RANGE);
+            isOutOfRange = true;
+        }
+        return isOutOfRange;
+    }
+
+    private int validateMovementYear() {
+        boolean flag = true;
+        int year = 0;
+        do {
+            try {
+                String input = movementView.requestInfo(Constants.ASK_FOR_MOVEMENT_DATE_YEAR);
+                year = Integer.parseInt(input);
+                flag = false;
+                while (validateYears(year)) {
+                    input = movementView.requestInfo(Constants.ASK_FOR_MOVEMENT_DATE_YEAR);
+                    year = Integer.parseInt(input);
+                }
+            } catch (NumberFormatException e) {
+                movementView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+
+        return year;
+    }
+
+    private LocalDate createDate() {
+        movementView.printBorderedMessage(Constants.REQUEST_DATE_INFO);
+        int day = validateMovementDay();
+        int month = validateMovementMonth();
+        int year = validateMovementYear();
+
+        LocalDate date = LocalDate.of(year, month, day);
+        return date;
+    }
     
 }
