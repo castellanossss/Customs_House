@@ -139,4 +139,16 @@ public class Presenter {
 
         return quantity;
     }
+
+    private Item createItem() {
+        itemView.printBorderedTitleMessage();
+        int itemId = validateItemId();
+        String itemName = itemView.requestInfo(Constants.ASK_FOR_ITEM_NAME);
+        double itemWeight = validateItemWeight();
+        double itemPrice = validateItemPrice();
+        Item item = new Item(itemId,itemName, itemWeight, itemPrice);
+
+        itemView.printBorderedMessage(Constants.ITEM_REGISTERED_SUCCESSFULLY);
+        return item;
+    }
 }
