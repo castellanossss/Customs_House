@@ -179,4 +179,32 @@ public class Presenter {
         supplierView.printBorderedMessage(Constants.SUPPLIER_REGISTERED_SUCCESSFULLY);
         return supplier;
     }
+    private int validateCustomerDoc() {
+        boolean flag = true;
+        int customerDoc = 0;
+        do {
+            try {
+                String input = customerView.requestInfo(Constants.ASK_FOR_CUSTOMER_DOC);
+                customerDoc = Integer.parseInt(input);
+                flag = false;
+            } catch (NumberFormatException e) {
+                customerView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+
+        return customerDoc;
+    }
+
+    private Customer createCustomer() {
+        customerView.printBorderedMessage(Constants.REQUEST_CUSTOMER_INFO);
+        customerView.printBorderedTitleMessage();
+        int doc = validateCustomerDoc();
+        String name = customerView.requestInfo(Constants.ASK_FOR_CUSTOMER_NAME);
+        String phoneNumber = customerView.requestInfo(Constants.ASK_FOR_CUSTOMER_PHONE);
+
+        Customer customer = new Customer(doc, name, phoneNumber);
+        customerView.printBorderedMessage(Constants.CUSTOMER_REGISTERED_SUCCESSFULLY);
+        return customer;
+    }
 }
