@@ -447,4 +447,15 @@ public class Presenter {
         
         return destinationCountry;
     }
+    
+    private LocalDate createDateForFilter() {
+        menus.printBorderedTitle(Constants.FILTER_BY_DATE);
+        movementView.printBorderedMessage(Constants.REQUEST_DATE_INFO);
+        int day = validateMovementDay();
+        int month = validateMovementMonth();
+        int year = validateMovementYear();
+
+        LocalDate date = LocalDate.of(year, month, day);
+        return date;
+    }
 }
