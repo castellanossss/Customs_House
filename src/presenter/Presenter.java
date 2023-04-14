@@ -71,4 +71,72 @@ public class Presenter {
         } while (!flag);
         return flag;
     }
+
+    private int validateItemId() {
+        boolean flag = true;
+        int id = 0;
+        do {
+            try {
+                String input = itemView.requestInfo(Constants.ASK_FOR_ITEM_ID);
+                id = Integer.parseInt(input);
+                flag = false;
+            } catch (NumberFormatException e) {
+                itemView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+
+        return id;
+    }
+
+    private double validateItemWeight() {
+        boolean flag = true;
+        double weight = 0;
+        do {
+            try {
+                String input = itemView.requestInfo(Constants.ASK_FOR_ITEM_WEIGHT);
+                weight = Double.parseDouble(input);
+                flag = false;
+            } catch (NumberFormatException e) {
+                itemView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+
+        return weight;
+    }
+
+    private double validateItemPrice() {
+        boolean flag = true;
+        double price = 0;
+        do {
+            try {
+                String input = itemView.requestInfo(Constants.ASK_FOR_ITEM_PRICE);
+                price = Double.parseDouble(input);
+                flag = false;
+            } catch (NumberFormatException e) {
+                itemView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+
+        return price;
+    }
+
+    private int validateItemQuantity() {
+        boolean flag = true;
+        int quantity = 0;
+        do {
+            try {
+                String input = itemView.requestInfo(Constants.ASK_FOR_ITEM_QUANTITY);
+                quantity = Integer.parseInt(input);
+                flag = false;
+            } catch (NumberFormatException e) {
+                itemView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+
+        return quantity;
+    }
 }
