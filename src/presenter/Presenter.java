@@ -352,4 +352,99 @@ public class Presenter {
         return date;
     }
     
+    public String obtainOriginCountry() {
+        String originCountry = "";
+        boolean flag = true;
+        do {
+            try {
+                String input = movementView.showOriginCountryMenu();
+                int decision = Integer.parseInt(input);
+                flag = false;
+                switch (decision) {
+                    case 1:
+                        originCountry = "Germany";
+                        break;
+                    case 2:
+                        originCountry = "Sweden";
+                        break;
+                    case 3:
+                        originCountry = "Japan";
+                        break;
+                    case 4:
+                        originCountry = "Brazil";
+                        break;
+                    case 5:
+                        originCountry = "Iceland";
+                        break;
+                    default:
+                        movementView.printBorderedMessage(Constants.INVALID_OPTION_MESSAGE);
+                        obtainOriginCountry();
+                }
+            } catch (NumberFormatException e) {
+                movementView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+
+        return originCountry;
+    }
+
+    private void createImport(String type) {
+        Item item;
+        Movement movement = this.createMovementImport(type);
+        int itemQuantity = validateItemQuantity(); 
+        for (int i = 0; i < itemQuantity; i++) {
+            item = this.createItem();
+            movement.addItem(item);
+        }
+        customSystem.registerMovement(movement);
+    }
+
+    private void createExport(String type) {
+        Item item;
+        Movement movement = this.createMovementExport(type);
+        int itemQuantity = validateItemQuantity(); 
+        for (int i = 0; i < itemQuantity; i++) {
+            item = this.createItem();
+            movement.addItem(item);
+        }
+        customSystem.registerMovement(movement);
+    }
+    
+    public String obtainDestinationCountry() {
+        String destinationCountry = "";
+        boolean flag = true;
+        do {
+            try {
+                String input = movementView.showDestinationCountryMenu();
+                int decision = Integer.parseInt(input);
+                flag = false;
+                switch (decision) {
+                    case 1:
+                        destinationCountry = "Germany";
+                        break;
+                    case 2:
+                        destinationCountry = "Sweden";
+                        break;
+                    case 3:
+                        destinationCountry = "Japan";
+                        break;
+                    case 4:
+                        destinationCountry = "Brazil";
+                        break;
+                    case 5:
+                        destinationCountry = "Iceland";
+                        break;
+                    default:
+                        movementView.printBorderedMessage(Constants.INVALID_OPTION_MESSAGE);
+                        obtainOriginCountry();
+                }
+            } catch (NumberFormatException e) {
+                movementView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+        
+        return destinationCountry;
+    }
 }
