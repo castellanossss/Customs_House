@@ -207,4 +207,33 @@ public class Presenter {
         customerView.printBorderedMessage(Constants.CUSTOMER_REGISTERED_SUCCESSFULLY);
         return customer;
     }
+
+    public Movement createMovementImport(String typeSelect){
+        int movementId = validateMovementId();
+        String type = typeSelect;
+        LocalDate date = createDate();
+        String originCountry = obtainOriginCountry();
+        String destinationCountry = "Australia";
+        Supplier supplier = createSupplier();
+        Customer customer = createCustomer();
+
+        Movement movement = new Movement(movementId, type, date, originCountry, destinationCountry, supplier, customer);
+        movementView.printBorderedMessage(Constants.MOVEMENT_REGISTERED_SUCCESSFULLY);
+        return movement;
+    }
+
+    public Movement createMovementExport(String typeSelect){
+        int movementId = validateMovementId();
+        String type = typeSelect;
+        LocalDate date = createDate();
+        String originCountry = "Australia";
+        String destinationCountry = obtainDestinationCountry();
+        Supplier supplier = createSupplier();
+        Customer customer = createCustomer();
+
+        Movement movement = new Movement(movementId, type, date, originCountry, destinationCountry, supplier, customer);
+        movementView.printBorderedMessage(Constants.MOVEMENT_REGISTERED_SUCCESSFULLY);
+        return movement;
+    }
+    
 }
