@@ -151,4 +151,32 @@ public class Presenter {
         itemView.printBorderedMessage(Constants.ITEM_REGISTERED_SUCCESSFULLY);
         return item;
     }
+
+    private int validateSupplierId() {
+        boolean flag = true;
+        int supplierId = 0;
+        do {
+            try {
+                String input = supplierView.requestInfo(Constants.ASK_FOR_SUPPLIER_ID);
+                supplierId = Integer.parseInt(input);
+                flag = false;
+            } catch (NumberFormatException e) {
+                supplierView.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            }
+        } while (flag);
+
+        return supplierId;
+    }
+
+    private Supplier createSupplier() {
+        supplierView.printBorderedMessage(Constants.REQUEST_SUPPLIER_INFO);
+        supplierView.printBorderedTitleMessage();
+        int id = validateSupplierId();
+        String name = supplierView.requestInfo(Constants.ASK_FOR_SUPPLIER_NAME);
+
+        Supplier supplier = new Supplier(id, name);
+        supplierView.printBorderedMessage(Constants.SUPPLIER_REGISTERED_SUCCESSFULLY);
+        return supplier;
+    }
 }
