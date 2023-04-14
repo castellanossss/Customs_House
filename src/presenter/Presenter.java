@@ -458,4 +458,107 @@ public class Presenter {
         LocalDate date = LocalDate.of(year, month, day);
         return date;
     }
+
+    private void firstDecision() throws IOException {
+        boolean flag = true;
+        do {
+            try {
+                String input = menus.showFirstMenu();
+                int decision = Integer.parseInt(input);
+                flag = false;
+                switch (decision) {
+                    case 1:
+                        movementView.printBorderedTitleMessage();
+                        this.createImport("Import");
+                        this.firstDecision();
+                        break;
+                    case 2:
+                        movementView.printBorderedTitleMessage();
+                        this.createExport("Export");
+                        this.firstDecision();
+                        break;
+                    case 3:
+                        this.secondDecision();
+                        break;
+                    case 4:
+                        menus.printBorderedMessage(Constants.GOOD_BYE_MESSAGE);
+                        customSystem.createMovementsFiles(Constants.OBJECT_INFO_PATH);
+                        System.exit(0);
+                        break;
+                    default:
+                        menus.printBorderedMessage(Constants.INVALID_OPTION_MESSAGE);
+                        firstDecision();
+                }
+            } catch (NumberFormatException e) {
+                menus.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            } 
+        } while (flag);
+    }
+
+    private void secondDecision() throws IOException {
+        boolean flag = true;
+        do {
+            try {
+                String input = menus.showSecondMenu();
+                int decision = Integer.parseInt(input);
+                flag = false;
+                switch (decision) {
+                    case 1:
+                        menus.printMessage(customSystem.filterByDate(createDateForFilter()));
+                        thirdDecision();
+                        break;
+                    case 2:
+                        menus.printBorderedMessage(Constants.FILTER_BY_IMPORTS);
+                        menus.printMessage(customSystem.filterByImports());
+                        thirdDecision();
+                        break;
+                    case 3:
+                        menus.printBorderedMessage(Constants.FILTER_BY_EXPORTS);
+                        menus.printMessage(customSystem.filterByExports());
+                        thirdDecision();
+                        break;
+                    case 4:
+                        menus.printBorderedMessage(Constants.FILTER_BY_IDENTIFIER);
+                        String inputMovId = movementView.requestInfo(Constants.FILTER_MOVEMENT_BY_ID);
+                        int movId = Integer.parseInt(inputMovId);
+                        menus.printMessage(customSystem.filterByIdentification(movId));
+                        thirdDecision();
+                        break;
+                    case 5:
+                        menus.printBorderedMessage(Constants.MOVEMENTS_HISTORY);
+                        menus.printMessage(customSystem.showMovementsHistory());
+                        thirdDecision();
+                        break;
+                    case 6:
+                        menus.printBorderedMessage(Constants.MOVEMENT_INFO);
+                        String inputId = movementView.requestInfo(Constants.FILTER_INFO_BY_MOVEMENT_ID);
+                        int idMov = Integer.parseInt(inputId);
+                        menus.printMessage(customSystem.showMovementInfoById(idMov));
+                        thirdDecision();
+                        break;
+                    case 7:
+                        menus.printBorderedMessage(Constants.FILE_CREATED);
+                        customSystem.createMovementsFiles(Constants.OBJECT_INFO_PATH);
+                        menus.printBorderedMessage("File created successfully!");
+                        thirdDecision();
+                        break;
+                    case 8:
+                        firstDecision();
+                        break;
+                    case 9:
+                        menus.printBorderedMessage(Constants.GOOD_BYE_MESSAGE);
+                        customSystem.createMovementsFiles(Constants.OBJECT_INFO_PATH);
+                        System.exit(0);
+                        break;
+                    default:
+                        menus.printBorderedMessage(Constants.INVALID_OPTION_MESSAGE);
+                        secondDecision();
+                }
+            } catch (NumberFormatException e) {
+                menus.printBorderedMessage(Constants.DISPLAY_INPUT_TYPE_ERROR);
+                flag = true;
+            } 
+        } while (flag);
+    }
 }
